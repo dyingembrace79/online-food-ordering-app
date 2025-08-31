@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickEats Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/login.css">
+
+
+</head>
+<body class="bg-gray-50">
+
+<main class="container mx-auto px-4 py-8">
+    <!-- Login Box -->
+    <section class="box">
+        <form autocomplete="off" onsubmit="handleAdminLogin(event)">
+            <header class="text-center mb-6">
+                <h1 class="text-3xl font-bold"><span class="icon">🔊</span> ADMIN LOGIN <span class="icon">❤️</span></h1>
+            </header>
+
+            <div class="inputBox mb-4">
+                <input type="text" id="username" name="username" required class="px-3 py-2 border rounded-lg w-full">
+                <label for="username">Username</label>
+            </div>
+
+            <div class="inputBox mb-4">
+                <input type="password" id="password" name="password" required class="px-3 py-2 border rounded-lg w-full">
+                <label for="password">Password</label>
+            </div>
+
+            <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg w-full hover:bg-blue-700 transition">
+                Login
+            </button>
+        </form>
+    </section>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="hidden mt-8">
+        <!-- Header -->
+        <div class="bg-blue-600 text-white py-4 mb-6 rounded-lg">
+            <div class="flex justify-between items-center px-6">
+                <h2 class="text-2xl font-bold">🔧 Admin Dashboard</h2>
+                <button onclick="logoutAdmin()" class="bg-blue-700 px-4 py-2 rounded-lg hover:bg-blue-800 transition">
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <div class="text-3xl font-bold text-blue-600" id="totalOrders">0</div>
+                <div class="text-gray-600">Total Orders</div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <div class="text-3xl font-bold text-green-600" id="totalRevenue">$0</div>
+                <div class="text-gray-600">Total Revenue</div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <div class="text-3xl font-bold text-purple-600" id="totalMenuItems">12</div>
+                <div class="text-gray-600">Menu Items</div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <div class="text-3xl font-bold text-orange-600" id="activeOrders">0</div>
+                <div class="text-gray-600">Active Orders</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mb-6">
+            <div class="flex space-x-4 border-b">
+                <button onclick="showAdminTab('orders')" class="admin-tab-btn active px-4 py-2 font-medium">📋 Orders</button>
+                <button onclick="showAdminTab('menu')" class="admin-tab-btn px-4 py-2 font-medium">🍽️ Menu Management</button>
+                <button onclick="showAdminTab('analytics')" class="admin-tab-btn px-4 py-2 font-medium">📊 Analytics</button>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="ordersTab" class="admin-tab-content">
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b">
+                    <h3 class="text-xl font-bold">Recent Orders</h3>
+                </div>
+                <div id="ordersList" class="p-6">
+                    <p class="text-gray-500 text-center py-8">No orders yet. Orders will appear here when customers place them.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Management Tab -->
+        <div id="menuTab" class="admin-tab-content hidden">
+            <div class="bg-white rounded-lg shadow mb-6">
+                <div class="p-6 border-b">
+                    <h3 class="text-xl font-bold">Add New Menu Item</h3>
+                </div>
+                <div class="p-6">
+                    <form onsubmit="addMenuItem(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" id="itemName" placeholder="Item Name" required class="px-3 py-2 border rounded-lg">
+                        <input type="number" id="itemPrice" placeholder="Price" step="0.01" required class="px-3 py-2 border rounded-lg">
+                        <select id="itemCategory" required class="px-3 py-2 border rounded-lg">
+                            <option value="">Select Category</option>
+                            <option value="pizza">Pizza</option>
+                            <option value="burger">Burger</option>
+                            <option value="drinks">Drinks</option>
+                            <option value="dessert">Dessert</option>
+                        </select>
+                        <input type="text" id="itemEmoji" placeholder="Emoji (🍕)" required class="px-3 py-2 border rounded-lg">
+                        <textarea id="itemDescription" placeholder="Description" required class="px-3 py-2 border rounded-lg md:col-span-2"></textarea>
+                        <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition md:col-span-2">
+                            Add Menu Item
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b">
+                    <h3 class="text-xl font-bold">Current Menu Items</h3>
+                </div>
+                <div id="adminMenuList" class="p-6">
+                    <!-- Menu items will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="admin-tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-bold mb-4">Popular Items</h3>
+                    <div id="popularItems">
+                        <p class="text-gray-500">No order data available yet.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-bold mb-4">Order Trends</h3>
+                    <div id="orderTrends">
+                        <p class="text-gray-500">Order trends will appear here as data accumulates.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../scripts/admin.js"></script>
+</body>
+</html>
