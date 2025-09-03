@@ -106,14 +106,3 @@
     }
 }
 
-/* Print Styles for Admin Reports */
-@media print {
-    .no-print {
-        display: none;
-    }
-    
-    .print-friendly {
-        background: white !important;
-        color: black !important;
-    }
-}

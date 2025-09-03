@@ -1,16 +1,23 @@
+console.log("admin.js loaded");
+
 // ---------------------------
 // Admin Login + Logout
 // ---------------------------
 function handleAdminLogin(e) {
+    
     e.preventDefault();
+
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+    
 
     if (username === "admin" && password === "password123") {
         document.querySelector(".box").style.display = "none"; // hide login
         document.getElementById("adminPanel").classList.remove("hidden"); // show dashboard
-        updateAdminDashboard();
+   
         showAdminTab('orders'); // default tab
+       
+        
     } else {
         alert("Invalid login. Use admin / password123");
     }
@@ -22,11 +29,13 @@ function logoutAdmin() {
     document.getElementById("username").value = "";
     document.getElementById("password").value = "";
 }
-
 // ---------------------------
 // Admin Tabs Switching
 // ---------------------------
 function showAdminTab(tabName) {
+    try {
+      console.log("showAdminTab function called");
+     console.log("tabName:", tabName);
     const tabs = document.querySelectorAll(".admin-tab-content");
     tabs.forEach(tab => tab.classList.add("hidden"));
 
@@ -38,13 +47,17 @@ function showAdminTab(tabName) {
         .find(btn => btn.getAttribute("onclick").includes(tabName));
     if (activeBtn) activeBtn.classList.add("active");
 
-    if (tabName === "orders") renderOrders();
-    if (tabName === "menu") renderMenu();
+    if (tabName === "orders") setTimeout(renderOrders, 100); // Wait for 1 second before renderOrders;
+    if (tabName === "menu") setTimeout(renderMenu, 100); // Wait for 1 second before renderMenu;
     if (tabName === "analytics") renderAnalytics();
+    } catch (error) {console.error(" error in showAdminTab:", error);
+        
+    }
 }
 
+
 // ---------------------------
-// Orders Rendering
+// Orders Rendering-- Ran out of time to implement order status updates
 // ---------------------------
 function renderOrders() {
     const ordersList = document.getElementById("ordersList");
@@ -55,6 +68,7 @@ function renderOrders() {
         return;
     }
 
+if (window.orders && window.orders.length > 0) {
     window.orders.forEach((order) => {
         const div = document.createElement("div");
         div.className = "border-b py-4";
@@ -62,9 +76,7 @@ function renderOrders() {
             <div class="flex justify-between">
                 <div>
                     <p class="font-bold">Order #${order.id}</p>
-                    <p class="text-gray-600">
-                        ${order.items.map(i => `${i.name} x${i.qty || i.quantity}`).join(", ")}
-                    </p>
+                    <p class="text-gray-600">${order.items.map(i => i.name + ' x' + (i.qty || i.quantity)).join(", ")}</p>
                     <p class="text-sm text-gray-500">${new Date(order.timestamp).toLocaleString()}</p>
                 </div>
                 <div class="text-green-600 font-bold">$${order.total.toFixed(2)}</div>
@@ -72,13 +84,14 @@ function renderOrders() {
         `;
         ordersList.appendChild(div);
     });
+    }
 }
-
 // ---------------------------
-// Menu Management
+// Menu Management- Working but does not interact with app.js menu
 // ---------------------------
 function renderMenu() {
     const adminMenuList = document.getElementById("adminMenuList");
+    console.log(adminMenuList);
     adminMenuList.innerHTML = "";
 
     if (!window.menuItems || window.menuItems.length === 0) {
@@ -106,8 +119,9 @@ function renderMenu() {
         adminMenuList.appendChild(div);
     });
 }
-
+window.menuItems = window.menuItems || [];
 function addMenuItem(e) {
+    console.log('addMenuItem function defined:', addMenuItem);
     e.preventDefault();
 
     const name = document.getElementById("itemName").value.trim();
@@ -131,6 +145,7 @@ function addMenuItem(e) {
     // Show success message
     alert("Menu item added successfully!");
 }
+window.addMenuItem = addMenuItem; // Expose to global scope for inline onclick
 
 function removeMenuItem(itemId) {
     if (confirm("Are you sure you want to remove this menu item?")) {
@@ -141,7 +156,7 @@ function removeMenuItem(itemId) {
 }
 
 // ---------------------------
-// Analytics
+// Analytics- was not able to implement charts due to time constraints
 // ---------------------------
 function renderAnalytics() {
     const popularItemsDiv = document.getElementById("popularItems");
@@ -172,7 +187,7 @@ function renderAnalytics() {
             </div>`).join("") :
         `<p class="text-gray-500">No items sold yet.</p>`;
 
-    // Order trends with better formatting
+    // Order trends
     const recentOrders = window.orders.slice(-10).reverse(); // Show last 10 orders
     orderTrendsDiv.innerHTML = recentOrders.length > 0 ?
         `<div class="space-y-2">
@@ -187,7 +202,7 @@ function renderAnalytics() {
 }
 
 // ---------------------------
-// Dashboard Stats - COMPLETE IMPLEMENTATION
+// Dashboard Stats - tried implement a different way to update stats
 // ---------------------------
 function updateAdminDashboard() {
     var totalOrdersElement = document.getElementById("totalOrders");
@@ -241,7 +256,11 @@ window.logoutAdmin = logoutAdmin;
 window.showAdminTab = showAdminTab;
 window.addMenuItem = addMenuItem;
 window.removeMenuItem = removeMenuItem;
-window.updateAdminDashboard = updateAdminDashboard;0
+window.updateAdminDashboard = updateAdminDashboard;
 window.renderOrders = renderOrders;
 window.renderMenu = renderMenu;
 window.renderAnalytics = renderAnalytics;
+
+
+
+// ---------------------------

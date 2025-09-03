@@ -3,6 +3,7 @@
 // ---------------------------
 
 // Initialize global data - use window object directly
+window.onload
 window.menuItems = window.menuItems || [
     { id: 1, name: "Margherita Pizza", price: 12.99, category: "pizza", emoji: "🍕", description: "Classic tomato, mozzarella, and basil" },
     { id: 2, name: "Pepperoni Pizza", price: 15.99, category: "pizza", emoji: "🍕", description: "Pepperoni with mozzarella cheese" },
@@ -19,6 +20,8 @@ window.menuItems = window.menuItems || [
 ];
 
 window.orders = window.orders || [];
+
+
 
 // Application state - keep these local
 let cart = [];
@@ -147,7 +150,7 @@ function closeCart() {
 }
 
 // ---------------------------
-// Checkout - FIXED VERSION
+// Checkout
 // ---------------------------
 function checkout() {
     if (cart.length === 0) return alert("Your cart is empty!");
@@ -158,7 +161,7 @@ function checkout() {
     const order = {
         id: orderNumber,
         items: cart.map(i => ({ ...i, qty: i.quantity })), // qty for admin
-        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+        total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0),
         timestamp: new Date(),
         status: 'pending'
     };
@@ -166,10 +169,7 @@ function checkout() {
     // Push to window.orders, not local orders
     window.orders.push(order);
 
-    // Update admin dashboard if loaded
-    if (typeof window.updateAdminDashboard === 'function') {
-        window.updateAdminDashboard();
-    }
+  
 
     cart = [];
     updateCartUI();

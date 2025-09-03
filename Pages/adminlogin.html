@@ -6,6 +6,8 @@
     <title>QuickEats Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/login.css">
+    
+    <script src="../scripts/app.js"></script>
 
 
 </head>
@@ -28,9 +30,39 @@
                 <input type="password" id="password" name="password" required class="px-3 py-2 border rounded-lg w-full">
                 <label for="password">Password</label>
             </div>
-
-            <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg w-full hover:bg-blue-700 transition">
-                Login
+   <!-- From Uiverse.io by ayman-ashine -->
+             <button type="submit" class="btn liquid-button liquid"
+            position="center"
+             aria-label="Sign in"
+             title="Sign in"
+             id="liquidButton"
+             name="liquidButton"
+             tabindex="0"
+             role="button"
+             aria-pressed="false"
+             aria-haspopup="false"
+             aria-expanded="false">
+             <svg viewBox="0 0 1440 320">
+             <path
+                d="M0,128L80,154.7C160,181,320,235,480,213.3C640,192,800,96,960,69.3C1120,43,1280,85,1360,106.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            ></path>
+                </svg>
+                <svg viewBox="0 0 1440 320">
+            <path
+                d="M0,128L80,154.7C160,181,320,235,480,213.3C640,192,800,96,960,69.3C1120,43,1280,85,1360,106.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            ></path>
+            </svg>
+            <svg viewBox="0 0 1440 320">
+            <path
+                d="M0,128L80,154.7C160,181,320,235,480,213.3C640,192,800,96,960,69.3C1120,43,1280,85,1360,106.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            ></path>
+            </svg>
+            <svg viewBox="0 0 1440 320">
+            <path
+                d="M0,128L80,154.7C160,181,320,235,480,213.3C640,192,800,96,960,69.3C1120,43,1280,85,1360,106.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            ></path>
+            </svg>
+            <span class="signin">Sign in</span>
             </button>
         </form>
     </section>
@@ -70,6 +102,7 @@
         <!-- Tabs -->
         <div class="mb-6">
             <div class="flex space-x-4 border-b">
+                
                 <button onclick="showAdminTab('orders')" class="admin-tab-btn active px-4 py-2 font-medium">📋 Orders</button>
                 <button onclick="showAdminTab('menu')" class="admin-tab-btn px-4 py-2 font-medium">🍽️ Menu Management</button>
                 <button onclick="showAdminTab('analytics')" class="admin-tab-btn px-4 py-2 font-medium">📊 Analytics</button>
@@ -143,7 +176,7 @@
         </div>
     </div>
 </main>
+<script src="../scripts/admin.js" defer></script>
 
-<script src="../scripts/admin.js"></script>
 </body>
 </html>

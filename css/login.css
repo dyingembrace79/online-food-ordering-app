@@ -8,7 +8,7 @@
 }
 
 body {
-    background: #ffffff;
+    background: #111;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,8 +21,8 @@ body {
 
 .box {
     position: relative;
-    width: 650px;
-    padding: 60px;
+    width: 350px;
+    padding: 40px;
     border-radius: 20px;
     background: #1e1e1e;
     overflow: hidden;
@@ -137,13 +137,32 @@ h1 {
                 0 0 40px #ff0057;
 }
 
+/* Button styles */
+/*.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: #00e5ff;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s, box-shadow 0.3s;
+}
 
-
+.btn:hover {
+    background: #00bcd4;
+    box-shadow: 0 0 15px #00f2ff,
+        0 0 30px #00f2ff,
+        0 0 45px #00f2ff;
+}
 /* From Uiverse.io by ayman-ashine */ 
 .liquid-button {
   background-color: #2db9ff;
-  border: none;
-  outline: 1px solid #ffffff;
+    border: none;
+    outline: 1px solid #ffffff;
   position: relative;
   width: 150px;
   height: 50px;
@@ -278,8 +297,4 @@ h1 {
 
 .links .signup {
     color: #ff0057;
-}
-/* Hide admin panel until logged in */
-.hidden {
-  display: none;
 }
